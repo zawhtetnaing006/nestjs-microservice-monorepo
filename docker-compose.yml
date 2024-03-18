@@ -1,0 +1,31 @@
+version: "3.7"
+networks: 
+  shop:
+services:
+  shop:
+    build:
+      context: .
+      dockerfile: ./apps/shop/Dockerfile
+      target: production-stage
+    ports:
+      - 3000:3000
+    depends_on:
+      - production
+    networks:
+      - shop
+  
+  production:
+    build: 
+      context: .
+      dockerfile: ./apps/production/Dockerfile
+      target: production-stage
+    networks:
+      - shop
+  
+  order:
+    build: 
+      context: .
+      dockerfile: ./apps/order/Dockerfile
+      target: production-stage
+    networks:
+      - shop
